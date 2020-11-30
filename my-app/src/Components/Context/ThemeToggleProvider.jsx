@@ -1,12 +1,11 @@
 import React, { Component, createContext } from 'react';
+export const ThemeToggleContext = createContext();
 
-export const ThemeContext = createContext();
-
-class ThemeContextProvider extends Component {
+class ThemeToggleProvider extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            theme:"light"
+            theme:"dark"
         };
         this.changeTheme = this.changeTheme.bind(this);
     }
@@ -25,11 +24,11 @@ class ThemeContextProvider extends Component {
         const value =  {theme,changeTheme}
         console.log(value)
         return (
-            <ThemeContext.Provider value={value}>
+            <ThemeToggleContext.Provider value={value}>
                 {this.props.children}
-            </ThemeContext.Provider>
+            </ThemeToggleContext.Provider>
         );
     }
 }
 
-export default ThemeContextProvider;
+export default ThemeToggleProvider;

@@ -1,4 +1,13 @@
 .App{
     min-height: 100vh;
-    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
+
+.job_links{
+    color: unset;
+    text-decoration: none;
+    position:'relative'
+}
+

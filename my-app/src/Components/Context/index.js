@@ -1,2 +1,2 @@
 export {default as JobContextProvider,JobContext} from './JobContextProvider';
-export {default as ThemeContextProvider,ThemeContext} from './ThemeContextProvider';
+export {default as ThemeToggleProvider,ThemeToggleContext} from './ThemeToggleProvider';

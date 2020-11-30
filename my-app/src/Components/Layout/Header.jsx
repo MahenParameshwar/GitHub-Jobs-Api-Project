@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import { ThemeContext } from '../Context/ThemeContextProvider';
+import {blue} from '../Styles'
+import { ThemeToggleContext } from '../Context';
+import SerachBar from './SearchBar';
 
 const Wrapper = styled.header`
     min-height:140px;
@@ -79,7 +81,7 @@ const HeaderContent = styled.div`
             left:58px;
             position:absolute;
             border-radius:50%;
-            background-color: black;
+            background-color: ${blue};
             transition:.4s;
             pointer-events:none;
             
@@ -96,7 +98,6 @@ class Header extends Component {
 
     handelToggle = ()=>{
         const {changeTheme} = this.context;
-        console.log(this.context)
         document.querySelector('.slider').classList.toggle('active');
         changeTheme();
     }
@@ -117,12 +118,13 @@ class Header extends Component {
                         </span>
                         <button onClick={this.handelToggle}>
                         </button>
-                        <span className="slider active"></span>
+                        <span className="slider"></span>
                         <span>
                         <img src="/images/desktop/icon-moon.svg" alt=""/>
                         </span>
                     </div>
                 </HeaderContent>
+                <SerachBar/>
             </Wrapper>
         );
     }
@@ -130,4 +132,4 @@ class Header extends Component {
 
 export default Header;
 
-Header.contextType = ThemeContext;
+Header.contextType = ThemeToggleContext;

@@ -1,27 +1,33 @@
 import './App.css';
-import { Home } from './Components/Pages';
+import {Header, SearchBar} from './Components/Layout'
 import React, { Component } from 'react';
-import { ThemeContext } from './Components/Context';
+import { ThemeToggleContext } from './Components/Context';
 import {lightTheme,darkTheme} from './Components/Styles'
+import { Home } from './Components/Pages';
+import { ThemeProvider } from 'styled-components';
 
 class App extends Component {
   render() {
     return (
-          <ThemeContext.Consumer>
+          <ThemeToggleContext.Consumer>
             {
               ({theme})=>{
-              
                 return(
-                  <div className = "App"
-                  style={(theme ==='light') ? 
+                  <ThemeProvider theme={{current:theme}}>
+                    <div className = "App"
+                    style={(theme ==='light') ? 
                         {...lightTheme} :
                         {...darkTheme}}>
-                    <Home/>
+                    <Header />
+                
+                    <Home />
                   </div>
+                  </ThemeProvider>
+                  
                 )
               }
             }
-          </ThemeContext.Consumer>
+          </ThemeToggleContext.Consumer>
     );
   }
 }

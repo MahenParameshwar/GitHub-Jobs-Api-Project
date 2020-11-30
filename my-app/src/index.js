@@ -4,14 +4,21 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from 'react-router-dom'
-import { JobContextProvider, ThemeContextProvider } from './Components/Context';
+import { JobContextProvider, ThemeToggleProvider } from './Components/Context';
+
 ReactDOM.render(
   <Router>
     <JobContextProvider>
-      <ThemeContextProvider>
-        <App />
-      </ThemeContextProvider>
+      <ThemeToggleProvider>
+        
+          
+            <App />
+          
+        
+      </ThemeToggleProvider>
     </JobContextProvider>
+    
+    
   </Router>,
   document.getElementById('root')
 );
