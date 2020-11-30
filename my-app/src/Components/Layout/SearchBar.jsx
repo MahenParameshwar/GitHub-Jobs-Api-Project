@@ -7,7 +7,11 @@ const FormWrapper = styled.div`
     position:absolute;
     width:100%;
     padding:0 9vw;
-    bottom: -25px;
+    top: -25px;
+
+    @media(max-width:600px){
+        top: -50px;
+    }
 `
 const Form = styled.form`
     width:100%;

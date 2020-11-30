@@ -124,7 +124,6 @@ class Header extends Component {
                         </span>
                     </div>
                 </HeaderContent>
-                <SerachBar/>
             </Wrapper>
         );
     }

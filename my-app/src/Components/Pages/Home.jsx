@@ -2,10 +2,20 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
 import {box_color,grey_dark,light_color,blue} from '../Styles'
+import { getJobs } from '../../Services/getJobs';
+import { timeDifference } from '../Helpers/timeDifference';
+import { SearchBar, Spinner } from '../Layout';
+
 
 const HomeWrapper = styled.div`
     padding:0 9vw;
     width:100%;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
 `
 const JobsBoard = styled.div`
     margin-top:120px;
@@ -13,7 +23,7 @@ const JobsBoard = styled.div`
     display:grid;
     grid-template-columns: repeat(auto-fill, minmax(300px,1fr));
     grid-auto-rows:225px;
-    gap:20px;
+    gap:40px;
 `
 const JobThumbnail = styled.div`
     padding:0 20px 20px 20px;
@@ -33,7 +43,7 @@ const JobThumbnail = styled.div`
 
     > small{
         position: absolute;
-        bottom: 15px;
+        bottom: 20px;
         color:${blue};
         font-weight:600
     }
@@ -60,22 +70,57 @@ const JobImgContainer = styled.div`
 
 
 class Home extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            jobs:[],
+            isLoading:true
+        }
+    }
+    
+    async componentDidMount(){
+        const BASE_URL = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json"
+        const jobs = await getJobs(BASE_URL);
+        this.setState({
+            jobs:jobs,
+            isLoading:false
+        })
+    }
+
     render() {
+        const {jobs,isLoading} = this.state;
         return (
             <HomeWrapper>
-                <JobsBoard>
-                    <NavLink className="job_links" style={{position:'relative'}} to="/">
-                        <JobThumbnail>
-                            <JobImgContainer className="job_image_container">
-                                <img src="https://jobs.github.com/rails/active_storage/blobs/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBbGVSIiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--bd91e06876e1bd9bdec148e7b30770887b70cf84/280.png" alt=""/>
-                            </JobImgContainer>
-                            <p>39 minutes ago . Full Time</p>
-                            <h3 style={{margin:"15px 0px"}}>IOS Developer(f/m/d)</h3>
-                            <p>DoctorBox Gmbh</p>
-                            <small className="job_location">Belin</small>
-                        </JobThumbnail>
-                    </NavLink>
+                <SearchBar/>
+                {
+                    isLoading ? <Spinner /> :
+                    <JobsBoard>
+                    {
+                        jobs?.map(job=>{
+                            return (
+                                <NavLink className="job_links" 
+                                style={{position:'relative'}} 
+                                to="/"
+                                key={job.id}>
+                                    <JobThumbnail>
+                                        <JobImgContainer className="job_image_container">
+                                            <img src={job.company_logo} alt=""/>
+                                        </JobImgContainer>
+                                        <p>{timeDifference(Date.now(),Date.parse(job.created_at))} . {job.type}</p>
+                                        <h3 style={{margin:"15px 0px"}}>{job.title}</h3>
+                                        <p>DoctorBox Gmbh</p>
+                                        <small className="job_location">{job.location}</small>
+                                    </JobThumbnail>
+                                </NavLink>
+                            ) 
+                        })
+                    }
+                    
                 </JobsBoard>
+                }
+                
+                
             </HomeWrapper>
         );
     }
