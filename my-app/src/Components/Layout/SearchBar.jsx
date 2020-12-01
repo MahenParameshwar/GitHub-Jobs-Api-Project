@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components'
 import {JobContext} from '../Context'
 import {blue, dark_color,light_color} from '../Styles'
+import SearchModal from './SearchModal';
 
 const FormWrapper = styled.div`
     position:absolute;
@@ -164,6 +165,7 @@ class SerachBar extends Component {
 
         }
     }
+    
 
     openModal= (e)=>{
         e.preventDefault();
@@ -171,6 +173,8 @@ class SerachBar extends Component {
     }
 
     render() {
+        const {theme} = this.props;
+        
         return (
             <FormWrapper>
                 <Form>
@@ -196,13 +200,12 @@ class SerachBar extends Component {
                         <button className="submit_btn" type="submit">Search</button>
                 </div>
                 <div className="modal_container">
-                    <button onClick={(e)=>this.openModal(e)}>
-                        <img src="/images/mobile/icon-filter.svg" alt=""/>
-                    </button>
+                    <SearchModal theme={theme}/>
                     <button className="mob_submit_btn" type="submit">
                         <img src="/images/desktop/icon-search-white.svg" alt=""/>
                     </button>
                 </div>
+                
             </Form>
 
             </FormWrapper>

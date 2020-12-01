@@ -20,7 +20,7 @@ class App extends Component {
                         {...darkTheme}}>
                     <Header />
                 
-                    <Home />
+                    <Home theme={theme}/>
                   </div>
                   </ThemeProvider>
                   

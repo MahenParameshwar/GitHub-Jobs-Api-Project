@@ -92,9 +92,11 @@ class Home extends Component {
 
     render() {
         const {jobs,isLoading} = this.state;
+        
+        
         return (
             <HomeWrapper>
-                <SearchBar/>
+                <SearchBar {...this.props} />
                 {
                     isLoading ? <Spinner /> :
                     <JobsBoard>
@@ -110,7 +112,7 @@ class Home extends Component {
                                             <img src={job.company_logo} alt=""/>
                                         </JobImgContainer>
                                         <p>{timeDifference(Date.now(),Date.parse(job.created_at))} . {job.type}</p>
-                                        <h3 style={{margin:"15px 0px"}}>{job.title}</h3>
+                                        <h3 className="job_title" style={{margin:"15px 0px"}}>{job.title}</h3>
                                         <p>{job.company}</p>
                                         <small className="job_location">{job.location}</small>
                                     </JobThumbnail>
