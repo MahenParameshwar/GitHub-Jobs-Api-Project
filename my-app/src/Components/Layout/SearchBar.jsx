@@ -17,16 +17,61 @@ const Form = styled.form`
     width:100%;
     display:flex;
     border-radius:8px;
+    position:relative;
 
     background-color:${({theme})=>{
             return (theme.current === 'light') ? light_color : dark_color;
         }};
 
+    @media(max-width:600px){
+            .location_container{
+                display:none
+            }
+
+            div.checkbox_search_container{
+                display:none;
+            }
+
+            div.modal_container{
+                position:absolute;
+                display:flex;
+                width:60px;
+                justify-content:space-between;
+                align-items:center;
+                right:15px;
+            }
+
+            
+        }
+
     > div{
-        flex:1;
         height:56px;
-        position:relative
-    };
+        position:relative;
+        flex:1
+    }
+
+    .modal_container{
+        display:none;
+        
+        button{
+            background-color:transparent;
+            outline:none;
+            border:none;
+        }
+
+        .mob_submit_btn{
+            background-color:${blue};
+            height:50%;
+            width:30px;
+            border-radius:5px;
+        }
+
+        .mob_submit_btn > img{
+            height: 50%
+        }
+
+        
+    }
 
     > div > span {
         position:absolute;
@@ -59,22 +104,26 @@ const Form = styled.form`
         color:${({theme})=>{
                     return (theme.current === 'light') ?  dark_color : light_color ;
                 }};
+
+        @media(max-width:600px){
+            border-right:none
+        }
                 
     }
 
-    .checkbox-search-container{
+    .checkbox_search_container{
         display:flex;
         align-items:center;
         justify-content:space-between;
         padding:0px 15px
     }
 
-    .checkbox-search-container .checkbox{
+    .checkbox_search_container .checkbox{
         display:flex;
         align-items:center;
     }
 
-    button{
+    .submit_btn{
         background-color:${blue};
         outline:none;
         border:1px solid ${blue};
@@ -86,7 +135,7 @@ const Form = styled.form`
         transition:all 0.2s ease
     }
 
-    button:hover{
+    .submit_btn:hover{
         background-color:transparent;
         color:${blue};
     }
@@ -97,8 +146,9 @@ const Form = styled.form`
     }
 
     label > span{
-        font-size:14px;
+        font-size:12px;
         margin-left:10px;
+        margin-top:5px;
     }
 
     input[type="checkbox"]{
@@ -115,6 +165,11 @@ class SerachBar extends Component {
         }
     }
 
+    openModal= (e)=>{
+        e.preventDefault();
+        console.log('called')
+    }
+
     render() {
         return (
             <FormWrapper>
@@ -125,20 +180,28 @@ class SerachBar extends Component {
                     </span>
                     <input type="text" placeholder="Filter by title,expertise... "/>
                 </div>
-                <div>
+                <div className="location_container">
                     <span className="location">
                         <img src="/images/desktop/icon-location.svg" alt=""/>
                     </span>
                         <input type="text" placeholder="Filter by location..."/>
                 </div>
-                <div className="checkbox-search-container">
+                <div className="checkbox_search_container">
                         <div className="checkbox">
                             <label htmlFor="">
                                 <input type="checkbox"/>
-                                <span>Full Time Only</span>
+                                <span>Full Time</span>
                             </label>
                         </div>
-                        <button type="submit">Search</button>
+                        <button className="submit_btn" type="submit">Search</button>
+                </div>
+                <div className="modal_container">
+                    <button onClick={(e)=>this.openModal(e)}>
+                        <img src="/images/mobile/icon-filter.svg" alt=""/>
+                    </button>
+                    <button className="mob_submit_btn" type="submit">
+                        <img src="/images/desktop/icon-search-white.svg" alt=""/>
+                    </button>
                 </div>
             </Form>
 

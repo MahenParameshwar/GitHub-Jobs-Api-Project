@@ -56,6 +56,8 @@ const JobImgContainer = styled.div`
     position: absolute;
     width: 68px;
     height: 68px;
+    display:flex;
+    align-items:center;
     top:-30px;
     border-radius:5px;
     border:1px solid ${({theme})=>{
@@ -109,7 +111,7 @@ class Home extends Component {
                                         </JobImgContainer>
                                         <p>{timeDifference(Date.now(),Date.parse(job.created_at))} . {job.type}</p>
                                         <h3 style={{margin:"15px 0px"}}>{job.title}</h3>
-                                        <p>DoctorBox Gmbh</p>
+                                        <p>{job.company}</p>
                                         <small className="job_location">{job.location}</small>
                                     </JobThumbnail>
                                 </NavLink>

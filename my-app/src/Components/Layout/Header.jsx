@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import {blue} from '../Styles'
 import { ThemeToggleContext } from '../Context';
-import SerachBar from './SearchBar';
+
 
 const Wrapper = styled.header`
     min-height:140px;
