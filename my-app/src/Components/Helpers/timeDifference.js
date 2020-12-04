@@ -9,6 +9,7 @@ export const timeDifference = (now,postedDate)=>{
             
         return (elapsed < msPerMinute) ?
                 Math.round(elapsed / 1000) + ` seconds ago` :   
+                
                 (elapsed < msPerHour) ?
                 Math.round(elapsed / msPerMinute) !== 1 ?
                 Math.round(elapsed / msPerMinute) + ` minutes ago` :   

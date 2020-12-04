@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import {blue} from '../Styles'
 import { ThemeToggleContext } from '../Context';
+import { NavLink } from 'react-router-dom';
 
 
 const Wrapper = styled.header`
@@ -109,9 +110,11 @@ class Header extends Component {
                     <img className="mobile-header-img" src="/images/mobile/bg-pattern-header.svg" alt=""/>
                 </ImageContainer>
                 <HeaderContent>
-                    <div className="logo_container">
-                        <img src="/images/desktop/logo.svg" alt=""/>
-                    </div>
+                    <NavLink to="/">
+                        <div className="logo_container">
+                            <img src="/images/desktop/logo.svg" alt=""/>
+                        </div>
+                    </NavLink>
                     <div className="header_toggle">
                         <span>
                             <img src="/images/desktop/icon-sun.svg" alt=""/>

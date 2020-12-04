@@ -14,6 +14,7 @@ const light_color = "#ffffff";
 const secondary_text = "#6d7f97" ;
 const box_color = "#19212e";
 const grey_dark = "#6d7f97";
+const link_color = "#38405F"
 
 export {
         lightTheme,
@@ -23,5 +24,6 @@ export {
         light_color,
         secondary_text,
         box_color,
-        grey_dark
+        grey_dark,
+        link_color
     }

@@ -105,7 +105,7 @@ class Home extends Component {
                             return (
                                 <NavLink className="job_links" 
                                 style={{position:'relative'}} 
-                                to="/"
+                                to={`/${job.id}`}
                                 key={job.id}>
                                     <JobThumbnail>
                                         <JobImgContainer className="job_image_container">
