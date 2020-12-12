@@ -4,7 +4,7 @@ import {NavLink} from 'react-router-dom';
 import {box_color,grey_dark,light_color,blue} from '../Styles'
 import { getJobs } from '../../Services/getJobs';
 import { timeDifference } from '../Helpers/timeDifference';
-import { SearchBar, Spinner } from '../Layout';
+import { SearchBar, Spinner, SpinnerMore } from '../Layout';
 
 
 const HomeWrapper = styled.div`
@@ -16,6 +16,26 @@ const HomeWrapper = styled.div`
     align-items:center;
     justify-content:center;
     position:relative;
+
+   
+
+    .load_more_btn{
+        margin:100px 100px;
+        background-color:${blue};
+        outline:none;
+        border:1px solid ${blue};
+        border-radius:5px;
+        height:40px;
+        padding:0 15px;
+        color:${light_color};
+        cursor:pointer;
+        transition:all 0.2s ease
+    }
+
+    .load_more_btn:hover{
+        background-color:transparent;
+        color:${blue};
+    }
 `
 const JobsBoard = styled.div`
     margin-top:120px;
@@ -49,6 +69,16 @@ const JobThumbnail = styled.div`
     }
 `
 
+const LoadingMoreSpinner = styled.div `
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    position:relative;
+    height:250px;
+
+`
+
 const JobImgContainer = styled.div`
     background-color:${({theme})=>{
         return (theme.current === 'light') ? light_color : box_color;
@@ -77,29 +107,54 @@ class Home extends Component {
         super(props);
         this.state = {
             jobs:[],
-            isLoading:true
+            isLoading:true,
+            currentPage:1,
+            isLoadingMore:false,
+            error:false
         }
+
+        this.handelLoadMore = this.handelLoadMore.bind(this)
     }
     
     async componentDidMount(){
-        const BASE_URL = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json"
-        const jobs = await getJobs(BASE_URL);
-        this.setState({
-            jobs:jobs,
+        const BASE_URL = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?page=1"
+        await getJobs(BASE_URL).then(res=>this.setState({
+            jobs:[...res],
             isLoading:false
+        })).catch(err=>this.setState({
+            isLoading:false,
+            error:true
+        }));
+    }
+
+    async  handelLoadMore(){
+        const {currentPage,jobs} = this.state;
+        this.setState({
+            isLoadingMore:true
         })
+        const page = currentPage + 1;
+        const BASE_URL = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?page=${page}`
+        await getJobs(BASE_URL).then(res=>this.setState({
+            jobs:[...jobs,...res],
+            currentPage:page,
+            isLoadingMore:false
+        })).catch(err=>this.setState({
+            isLoadingMore:false,
+            error:true
+        }));
+        
     }
 
     render() {
-        const {jobs,isLoading} = this.state;
+        const {jobs,isLoading,isLoadingMore,error} = this.state;
         
         
         return (
             <HomeWrapper>
                 <SearchBar {...this.props} />
                 {
-                    isLoading ? <Spinner /> :
-                    <JobsBoard>
+                    isLoading ? <Spinner /> : error ? <h2>Oops Something went wrong</h2> :
+                    <JobsBoard style={{position:"relative"}}>
                     {
                         jobs?.map(job=>{
                             return (
@@ -120,11 +175,19 @@ class Home extends Component {
                             ) 
                         })
                     }
-                    
+                    {isLoadingMore ?  
+                    <LoadingMoreSpinner>
+                                        <SpinnerMore />
+                    </LoadingMoreSpinner>
+                                        : <></>
+                                    
+                    } 
                 </JobsBoard>
                 }
                 
-                
+                {
+                    isLoading ? <></> :  <button className="load_more_btn" disabled={isLoadingMore} onClick={this.handelLoadMore}>Load More</button>
+                }
             </HomeWrapper>
         );
     }

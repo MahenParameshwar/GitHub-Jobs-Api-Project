@@ -5,7 +5,7 @@ import { ThemeToggleContext } from '../Context';
 const SpinnerWrapper = styled.div`
     animation: rotate 1.5s linear infinite;
     display: block;
-    height:100%
+    height:100px;
     & img{
         height:100%
     }
@@ -19,7 +19,7 @@ const SpinnerWrapper = styled.div`
     }
 }
 `
-function Spinner(props)     
+function SpinnerMore(props)     
 {
     return (
         <ThemeToggleContext.Consumer>
@@ -42,4 +42,4 @@ function Spinner(props)
     );
 }
 
-export default Spinner;
+export default SpinnerMore;
