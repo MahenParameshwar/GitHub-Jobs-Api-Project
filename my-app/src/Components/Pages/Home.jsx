@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import {NavLink} from 'react-router-dom';
 import {box_color,grey_dark,light_color,blue} from '../Styles'
-import { getJobs } from '../../Services/getJobs';
+import {JobContext} from '../Context/JobContextProvider'
 import { timeDifference } from '../Helpers/timeDifference';
 import { SearchBar, Spinner, SpinnerMore } from '../Layout';
 
@@ -103,51 +103,9 @@ const JobImgContainer = styled.div`
 
 class Home extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            jobs:[],
-            isLoading:true,
-            currentPage:1,
-            isLoadingMore:false,
-            error:false
-        }
-
-        this.handelLoadMore = this.handelLoadMore.bind(this)
-    }
-    
-    async componentDidMount(){
-        const BASE_URL = "https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?page=1"
-        await getJobs(BASE_URL).then(res=>this.setState({
-            jobs:[...res],
-            isLoading:false
-        })).catch(err=>this.setState({
-            isLoading:false,
-            error:true
-        }));
-    }
-
-    async  handelLoadMore(){
-        const {currentPage,jobs} = this.state;
-        this.setState({
-            isLoadingMore:true
-        })
-        const page = currentPage + 1;
-        const BASE_URL = `https://cors-anywhere.herokuapp.com/https://jobs.github.com/positions.json?page=${page}`
-        await getJobs(BASE_URL).then(res=>this.setState({
-            jobs:[...jobs,...res],
-            currentPage:page,
-            isLoadingMore:false
-        })).catch(err=>this.setState({
-            isLoadingMore:false,
-            error:true
-        }));
-        
-    }
 
     render() {
-        const {jobs,isLoading,isLoadingMore,error} = this.state;
-        
+        const {jobs,isLoading,isLoadingMore,error,handelLoadMore} = this.context;
         
         return (
             <HomeWrapper>
@@ -186,11 +144,12 @@ class Home extends Component {
                 }
                 
                 {
-                    isLoading ? <></> :  <button className="load_more_btn" disabled={isLoadingMore} onClick={this.handelLoadMore}>Load More</button>
+                    isLoading ? <></> :  <button className="load_more_btn" disabled={isLoadingMore} onClick={handelLoadMore}>Load More</button>
                 }
             </HomeWrapper>
         );
     }
 }
 
+Home.contextType = JobContext
 export default Home;

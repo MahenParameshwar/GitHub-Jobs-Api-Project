@@ -22,7 +22,7 @@ class ThemeToggleProvider extends Component {
         const {theme} = this.state
         const {changeTheme} = this;
         const value =  {theme,changeTheme}
-        console.log(value)
+        
         return (
             <ThemeToggleContext.Provider value={value}>
                 {this.props.children}
