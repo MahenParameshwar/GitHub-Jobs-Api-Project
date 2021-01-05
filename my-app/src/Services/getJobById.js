@@ -10,4 +10,5 @@ async function getJobById(id){
     
 }
 
-export {getJobById}
+
+export default getJobById

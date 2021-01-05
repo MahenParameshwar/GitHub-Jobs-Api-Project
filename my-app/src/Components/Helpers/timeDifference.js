@@ -34,4 +34,4 @@ export const timeDifference = (now,postedDate)=>{
                 Math.round(elapsed / msPerYear) + ` years ago`   
                 :Math.round(elapsed / msPerYear) + ` year ago`   
         }
-    
+

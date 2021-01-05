@@ -10,4 +10,4 @@ async function getJobs(BASE_URL){
     
 }
 
-export {getJobs}
+export default getJobs

@@ -1,5 +1,5 @@
 import React, { Component, createContext } from 'react';
-import { getJobs } from '../../Services/getJobs';
+import { getJobByParameters,getJobs } from '../../Services';
 
 export const JobContext = createContext();
 
@@ -15,6 +15,7 @@ class JobContextProvider extends Component {
         }
 
         this.handelLoadMore = this.handelLoadMore.bind(this)
+        this.handelSearch = this.handelSearch.bind(this)
     }
 
     async componentDidMount(){
@@ -43,6 +44,22 @@ class JobContextProvider extends Component {
             isLoadingMore:false,
             error:true
         }));
+        
+    }
+
+    async handelSearch(parameters){
+        this.setState({
+            isLoading:true
+        });
+        await getJobByParameters({...parameters})
+        .then(res=>this.setState({
+            jobs:[...res],
+            isLoading:false
+        }))
+        .catch(err=>({
+            isLoading:false,
+            error:true
+        }))
         
     }
     
