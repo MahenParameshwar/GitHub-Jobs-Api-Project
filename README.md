@@ -17,7 +17,7 @@ This Project was inspired by the design at FrontEnd Mentors https://www.frontend
 
 
 
-## Sneak peek
+## Demo
 ![gif](./images/github.gif)
 
 ## <code>Landing Page</code>
