@@ -47,8 +47,8 @@ Clone down this repository. You will need node and npm installed globally on you
     <li>react-redux</li>
     <li>react-router-dom</li>
     <li>styled-components</li>
-    <li>@material-ui/core/li>
-    <li>antd/li>
+    <li>@material-ui/core</li>
+    <li>antd</li>
   </ul>
   
   ### Link
